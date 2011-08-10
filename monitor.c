@@ -2258,6 +2258,8 @@ static void mem_info_32(Monitor *mon, CPUState *env)
             mem_print(mon, &start, &last_prot, end, prot);
         }
     }
+    /* Flush last range */
+    mem_print(mon, &start, &last_prot, (target_phys_addr_t)1 << 32, 0);
 }
 
 static void mem_info_pae32(Monitor *mon, CPUState *env)
@@ -2311,6 +2313,8 @@ static void mem_info_pae32(Monitor *mon, CPUState *env)
             mem_print(mon, &start, &last_prot, end, prot);
         }
     }
+    /* Flush last range */
+    mem_print(mon, &start, &last_prot, (target_phys_addr_t)1 << 32, 0);
 }
 
 
@@ -2385,6 +2389,8 @@ static void mem_info_64(Monitor *mon, CPUState *env)
             mem_print(mon, &start, &last_prot, end, prot);
         }
     }
+    /* Flush last range */
+    mem_print(mon, &start, &last_prot, (target_phys_addr_t)1 << 48, 0);
 }
 #endif
 
