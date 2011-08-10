@@ -1104,6 +1104,17 @@ bool cpu_exec_all(void)
             } else {
                 r = tcg_cpu_exec(env);
             }
+            if (r == EXCP_TRIPLE) {
+                cpu_dump_state(env, stderr, fprintf, 0);
+                fprintf(stderr, "Triple fault.  Halting for inspection via"
+                        " QEMU monitor.\n");
+                if (gdbserver_running())
+                    r = EXCP_DEBUG;
+                else {
+                    vm_stop(0);
+                    break;
+                }
+            }
             if (r == EXCP_DEBUG) {
                 cpu_handle_guest_debug(env);
                 break;
